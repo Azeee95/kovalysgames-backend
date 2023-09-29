@@ -11,6 +11,7 @@ const scores = mongoose.Schema({
 const userSchema = mongoose.Schema({
 
     codeneo : String,
+    certified: Boolean,
     email: String,
     password: String,
     fullname: String,
