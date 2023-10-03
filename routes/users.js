@@ -3,7 +3,15 @@ var router = express.Router();
 const mongoose = require('mongoose');
 const User = require('../models/users');
 
+// Import Kovalys Connect Modules
+
+const signin = require('../kovalys_modules/signin')
+const populatedata = require ('../kovalys_modules/populatedata')
+const results = require('../kovalys_modules/results');
+const signup = require('../kovalys_modules/signup');
+
 /* GET users listing. */
+
 router.get('/', function(req, res, next) {
 
   User.find().then((data) => {
@@ -14,96 +22,44 @@ router.get('/', function(req, res, next) {
 
 });
 
-function generateTmpNeo () {
+router.post('/signin', async (req, res) => {
 
-  let randomNbr = Math.floor(Math.random() * 9000) + 1000;
-  let date = new Date();
-
-  let year = date.getFullYear();
-
-  let day = date.getDate();
-
-    if(day < 10){
-
-      day = day.toString().padStart(2, '0')
-
-    }
-
-    let month = date.getMonth()+1;
-
-    if(month < 10){
-
-      month = month.toString().padStart(2, '0')
-
-    }
-
-  let codeNeo = `TMP${year}${month}${day}${randomNbr}`
-
- return codeNeo;
-
-}
-
-router.post('/add', (req, res) => {
-
-const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
-
-function validateEmail(email) {
-  return emailRegex.test(email);
-}
-
-const email = req.body.email.trim();
-const isValidEmail = validateEmail(email);
-
-if (isValidEmail) {
-
-  User.findOne({email: {$regex: new RegExp(email, 'i')}}) 
-  .then((data) => {
-
-    console.log(data)
-    codeNeo = generateTmpNeo();
-
-    if (data !== null) {
-
-      res.json('User exists')
-
-    } else {
-
-      const newUser = new User({
-
-        codeneo: codeNeo,
-        certified: false,
-        email : email,
-        password: req.body.password,
-        fullname: req.body.fullname,
-        city: req.body.city,
-        scores: {
-      
-          game: '650d6ca4f0716a93a1f1466c',
-          date: new Date(),
-          level: req.body.level
-      
-        }
-      
-      });
-      
-      newUser.save().then(() => {
-      
-            res.json('New user saved');
-      
-      })
-
-    }
-
-  })
-
-} else {
-
-  res.json('Wrong email format')
-
-}
-
+  const credentials = [{
   
+    email : req.body.email,
+    password: req.body.password,
+  
+  }]
+
+  const result = await signin(credentials);
+
+  console.log(result)
+  
+  res.json(result);
+  
+})
+
+router.post('/signup', async (req, res) => {
+
+const datareceived = [{
+
+  email : req.body.email,
+  password: req.body.password,
+  firstname: req.body.firstname,
+  lastname: req.body.lastname,
+  country: req.body.country,
+  city: req.body.city,
+  phonenumber: req.body.phonenumber,
+
+}]
+
+
+const result = await signup(datareceived);
+
+res.json(result);
+
 });
+
 
 
 router.post('/score', (req, res) => {
