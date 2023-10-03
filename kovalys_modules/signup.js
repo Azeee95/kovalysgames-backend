@@ -3,6 +3,11 @@ var router = express.Router();
 const mongoose = require('mongoose');
 const User = require('../models/users');
 
+// Authentication tools
+const uid2 = require ('uid2');
+const bcrypt = require('bcrypt');
+
+
 // Import Kovalys Connect Modules
 
 const generateneocode = require ('./generateneocode');
@@ -18,6 +23,8 @@ module.exports = async function signup(userdata) {
   const certified = false;
   const email = userdata[0].email.trim();
   const password = userdata[0].password.trim();
+  const hash = bcrypt.hashSync(password, 10)
+  const token = uid2(32);
   const firstname = userdata[0].firstname.trim();
   const lastname = userdata[0].lastname.trim();
   const country = userdata[0].country.trim();
@@ -53,7 +60,8 @@ module.exports = async function signup(userdata) {
         codeneo: codeneo,
         certified: certified,
         email : email,
-        password: password,
+        password: hash,
+        token: token,
         firstname: firstname,
         lastname: lastname,
         country: country,

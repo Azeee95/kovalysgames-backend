@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose');
 const User = require('../models/users');
+const uid2 = require ('uid2');
+const token = uid2(32);
+
 
 // Import Kovalys Connect Modules
 
@@ -52,7 +55,6 @@ const datareceived = [{
   phonenumber: req.body.phonenumber,
 
 }]
-
 
 const result = await signup(datareceived);
 

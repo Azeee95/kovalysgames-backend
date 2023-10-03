@@ -3,6 +3,13 @@ var router = express.Router();
 const mongoose = require('mongoose');
 const User = require('../models/users');
 
+// Authentication tools
+const bcrypt = require('bcrypt');
+const uid2 = require ('uid2');
+
+const token = uid2(32);
+
+
 // Import Kovalys Connect Modules
 
 const results = require('./results')
@@ -20,6 +27,8 @@ function validateEmail(email) {
 }
 
 const email = credentials[0].email.trim();
+const password = credentials[0].password.trim();
+
 const isValidEmail = validateEmail(email);
 
 if (!isValidEmail) {
@@ -38,7 +47,7 @@ if (!isValidEmail) {
       
       } else {
 
-        if (data.password !== credentials[0].password) {
+        if (!bcrypt.compareSync(password, data.password)) {
 
           result = results[2].Message;
           return result;

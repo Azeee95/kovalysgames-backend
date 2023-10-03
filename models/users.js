@@ -14,6 +14,7 @@ const userSchema = mongoose.Schema({
     certified: Boolean,
     email: String,
     password: String,
+    token: String,
     firstname: String,
     lastname: String,
     company: String,
