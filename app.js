@@ -13,8 +13,7 @@ var app = express();
 const cors = require('cors');
 app.use(cors( {
 
-    origin: ['https://www.kovalys-partners.com', 'http://localhost:3000/']
-
+     origin: 'https://www.kovalys-partners.com',
 
 }));
 
