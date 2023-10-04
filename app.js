@@ -11,7 +11,12 @@ var gameRouter = require('./routes/games');
 
 var app = express();
 const cors = require('cors');
-app.use(cors());
+app.use(cors( {
+
+    origin: ['https://www.kovalys-partners.com']
+
+
+}));
 
 const mongoose = require('mongoose');
 require('./models/connection');
