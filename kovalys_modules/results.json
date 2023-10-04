@@ -1,7 +1,7 @@
 [
     { "id": 0, "Message" : "Format email invalide"},
-    { "id": 1, "Message" : "Utilisateur inconnu"},
-    { "id": 2, "Message" : "Mot de passe erroné"},
+    { "id": 1, "Message" : "Utilisateur inconnu ou Mot de passe erroné"},
+    { "id": 2, "Message" : "Utilisateur inconnu ou Mot de passe erroné"},
     { "id": 3, "Message" : "Accès autorisé"},
     { "id": 4, "Message" : "Erreur inconnue. Contactez le support"},
     { "id": 5, "Message" : "Utilisateur existant"},

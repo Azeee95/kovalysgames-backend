@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose');
 const User = require('../models/users');
+const Country = require('../models/countries');
+
 const uid2 = require ('uid2');
 const token = uid2(32);
 
@@ -24,6 +26,7 @@ router.get('/', function(req, res, next) {
   }) 
 
 });
+
 
 router.post('/signin', async (req, res) => {
 
